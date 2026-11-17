@@ -1,0 +1,42 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# env & secrets — NEVER commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# builds
+dist/
+build/
+.vite/
+*.tsbuildinfo
+
+# ml artifacts
+services/ai/models/*.pt
+services/ai/models/*.pkl
+services/ai/training/data/
+services/ai/training/runs/
+
+# logs / os
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
