@@ -10,22 +10,6 @@ ON DUPLICATE KEY UPDATE
   city = VALUES(city),
   state = VALUES(state);
 
--- Development admin account
--- Password: Admin@123
-INSERT INTO users (id, org_id, email, password_hash, role, full_name)
-VALUES (
-  1,
-  1,
-  'admin@civiceye.local',
-  '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
-  'ADMIN',
-  'Demo Admin'
-)
-ON DUPLICATE KEY UPDATE
-  org_id = VALUES(org_id),
-  role = VALUES(role),
-  full_name = VALUES(full_name);
-
 INSERT INTO departments (org_id, name, code, contact_email) VALUES
   (1, 'Road Maintenance', 'ROAD', 'road@demo.local'),
   (1, 'Sanitation', 'SANITATION', 'sanitation@demo.local'),

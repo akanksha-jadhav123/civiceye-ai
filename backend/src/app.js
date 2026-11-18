@@ -38,6 +38,8 @@ app.use('/api/v1/auth', authRoutes);
 
 const complaintRoutes = require('./modules/complaints/routes');
 app.use('/api/v1/complaints', complaintRoutes);
+app.use('/api/v1/admin', require('./modules/admin/routes'));
+app.use('/api/v1/worker', require('./modules/worker/routes'));
 
 // ---- 404 handler ----
 app.use((req, res) =>
@@ -46,12 +48,11 @@ app.use((req, res) =>
 
 // ---- centralized error handler ----
 app.use((err, req, res, next) => {
-  console.error(err);
   const status = err.status || 500;
-  res.status(status).json({
-    success: false,
-    error: env.NODE_ENV === 'production' ? 'Internal error' : err.message,
-  });
+  if (status >= 500) console.error(err);
+  // Errors we raise on purpose (HttpError) are safe to show; unexpected ones are not.
+  const expose = err.expose === true || (status < 500 && err.status) || env.NODE_ENV !== 'production';
+  res.status(status).json({ success: false, error: expose ? err.message : 'Internal error' });
 });
 
 module.exports = { app };
